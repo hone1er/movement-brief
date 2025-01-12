@@ -9,8 +9,8 @@ This is a simple **Next.js application** that uses **pnpm** as the package manag
 ### 1. Clone the Repository
 
 ````bash
-git clone <repository-url>
-cd <repository-folder>
+git clone https://github.com/hone1er/movement-brief.git
+cd movement-brief
 
 
 ### 2. Install Dependencies
