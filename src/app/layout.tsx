@@ -3,7 +3,6 @@ import "@/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { Web3Provider } from "./context/Web3Provider";
-import QueryProvider from "./context/QueryProvider";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -17,9 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <Web3Provider>
-          <QueryProvider>{children}</QueryProvider>
-        </Web3Provider>
+        <Web3Provider>{children}</Web3Provider>
       </body>
     </html>
   );
