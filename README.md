@@ -4,7 +4,7 @@ This is a simple **Next.js application** that uses **pnpm** as the package manag
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Clone the Repository
 
@@ -34,6 +34,15 @@ NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=""
 
 ---
 
+## Wallet Verification
+
+This application uses the following wallet verification techniques:
+
+1. **Wallet Connect**: The application uses Wallet Connect to connect to the user's wallet
+2. **Signature**: The application requests the user to sign a message to verify the user's wallet. A WAGMI useSignMessage hook is used on the client side. The signature, address, and message are sent to the server for verification using VIEMs verifySignature function.
+
+---
+
 ## Bot Prevention
 
 This application uses the following bot prevention techniques:
@@ -44,6 +53,6 @@ This application uses the following bot prevention techniques:
 
 ---
 
-## 📚 Resources
+## Resources
 
 - [Next.js Documentation](https://nextjs.org/docs)
