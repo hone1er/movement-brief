@@ -21,7 +21,6 @@ const ProtectedConnectButtons = () => {
 
   const verifyTokenOnServer = useMemo(() => {
     return async () => {
-      // Optional: Verify the token on your backend
       try {
         const response = await fetch("/api/authentication/cloudflare/captcha", {
           method: "POST",

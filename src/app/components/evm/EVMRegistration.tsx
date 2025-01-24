@@ -36,6 +36,33 @@ const EVMRegistration = () => {
       console.error("Error saving data to server:", error);
     }
   };
+
+  const handleOnSuccess = (data: string, account: `0x${string}`) => {
+    if (!!address && address === account) {
+      saveToServer(address, data)
+        ?.then((res) => {
+          if (res?.ok) {
+            setRegistrationSuccess(true);
+            console.log("Account registered successfully");
+            window.alert("Account registered successfully");
+            setRegistrationError(null);
+          }
+
+          if (res?.status === 429) {
+            console.log("Too many requests, please try again later");
+            window.alert("Too many requests, please try again later");
+            setRegistrationError("Too many requests");
+            setRegistrationSuccess(false);
+          }
+        })
+        .catch((error) => {
+          console.error("Error saving data to server:", error);
+          setRegistrationError("Error saving data to server");
+          setRegistrationSuccess(false);
+        });
+    }
+  };
+
   return (
     <div className="mt-6">
       <p className="text-sm text-gray-600">
@@ -54,33 +81,7 @@ const EVMRegistration = () => {
             },
             {
               onSuccess: (data, { account }) => {
-                if (!!address && address === account) {
-                  saveToServer(address, data)
-                    ?.then((res) => {
-                      if (res?.ok) {
-                        setRegistrationSuccess(true);
-                        console.log("Account registered successfully");
-                        window.alert("Account registered successfully");
-                        setRegistrationError(null);
-                      }
-
-                      if (res?.status === 429) {
-                        console.log(
-                          "Too many requests, please try again later",
-                        );
-                        window.alert(
-                          "Too many requests, please try again later",
-                        );
-                        setRegistrationError("Too many requests");
-                        setRegistrationSuccess(false);
-                      }
-                    })
-                    .catch((error) => {
-                      console.error("Error saving data to server:", error);
-                      setRegistrationError("Error saving data to server");
-                      setRegistrationSuccess(false);
-                    });
-                }
+                handleOnSuccess(data, account as `0x${string}`);
               },
             },
           );
