@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Find or create the IP entry
-    let ipEntry = fileData.find((entry) => entry.ip === ip);
+    let ipEntry;
 
     if (!ipEntry) {
       ipEntry = {
