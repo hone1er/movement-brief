@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Turnstile from "react-turnstile";
 import { EVMComponent } from "./evm/EVMComponent";
 import MovementComponent from "./MovementComponent";
@@ -19,34 +19,36 @@ const ProtectedConnectButtons = () => {
     setCaptchaToken(token);
   };
 
-  const verifyTokenOnServer = async () => {
-    // Optional: Verify the token on your backend
-    try {
-      const response = await fetch("/api/authentication/cloudflare/captcha", {
-        method: "POST",
-        body: JSON.stringify({ token: captchaToken }),
-        headers: { "Content-Type": "application/json" },
-      });
-      return response.ok;
-    } catch (error) {
-      console.error("Captcha verification failed", error);
-      return false;
-    }
-  };
+  const verifyTokenOnServer = useMemo(() => {
+    return async () => {
+      // Optional: Verify the token on your backend
+      try {
+        const response = await fetch("/api/authentication/cloudflare/captcha", {
+          method: "POST",
+          body: JSON.stringify({ token: captchaToken }),
+          headers: { "Content-Type": "application/json" },
+        });
+        return response.ok;
+      } catch (error) {
+        console.error("Captcha verification failed", error);
+        return false;
+      }
+    };
+  }, [captchaToken]);
 
   useEffect(() => {
     const verifyToken = async () => {
       if (captchaToken) {
         const isVerified = await verifyTokenOnServer();
         if (!isVerified) {
-          //   setIsCaptchaVerified(false);
+          setIsCaptchaVerified(false);
         }
       }
     };
     verifyToken()
       .then((val) => console.log(val))
       .catch((err) => console.error(err));
-  }, [captchaToken]);
+  }, [captchaToken, verifyTokenOnServer]);
 
   return (
     <div className="flex min-h-96 min-w-full items-center justify-between bg-gray-100 px-8 text-black">
