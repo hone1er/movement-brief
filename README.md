@@ -24,10 +24,6 @@ pnpm install
 pnpm dev
 ```
 
-```bash
-NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=""
-```
-
 ---
 
 ## Wallet Verification
