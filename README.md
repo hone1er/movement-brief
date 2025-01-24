@@ -24,10 +24,6 @@ pnpm install
 pnpm dev
 ```
 
-### 4. Environment Variables
-
-Create a `.env.local` file in the root directory of the project and add the following environment variables:
-
 ```bash
 NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=""
 ```
@@ -38,8 +34,9 @@ NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=""
 
 This application uses the following wallet verification techniques:
 
-1. **Wallet Connect**: The application uses Wallet Connect to connect to the user's wallet
-2. **Signature**: The application requests the user to sign a message to verify the user's wallet. A WAGMI useSignMessage hook is used on the client side. The signature, address, and message are sent to the server for verification using VIEMs verifySignature function.
+1. **Rainbow Kit**: The application uses RainbowKit to connect to the user's wallet. This allows for various wallet options, such as MetaMask, WalletConnect, and more. Also works with mulitsig wallets through walletconnect.
+2. **Signature**: The application requests the user to sign a message to verify the user's wallet. For EVM WAGMI useSignMessage hook is used on the client side. The signature, address, and message are sent to the server for verification using VIEMs verifySignature function.
+   For Aptos/Movement the signature is acquired through the client side using the useWallet hooks and signMessage function. The signature, address, and message are sent to the server for verification.
 
 ---
 
@@ -50,6 +47,7 @@ This application uses the following bot prevention techniques:
 1. **IP Address**: The application verifies the IP address of the user to ensure that the user is not a bot.
 2. **Signature**: The application verifies the signature of the user to ensure that the user is not a bot.
 3. **Rate Limit**: The application enforces rate limits to prevent bots from making too many requests.
+4. **Cloudflare Captcha**: The application uses Cloudflare Captcha to verify that the user is not a bot.
 
 ---
 
