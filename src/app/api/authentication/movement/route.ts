@@ -65,13 +65,9 @@ export async function POST(req: NextRequest) {
 
   try {
     // Decode the signature (assumed to be base64-encoded)
-    const signatureBuffer = new Uint8Array(
-      decodeBase64(signature) as ArrayBuffer,
-    );
+    const signatureBuffer = new Uint8Array(decodeBase64(signature));
     const messageBuffer = new TextEncoder().encode(message);
-    const publicKeyBuffer = new Uint8Array(
-      decodeBase64(publicKey) as ArrayBuffer,
-    );
+    const publicKeyBuffer = new Uint8Array(decodeBase64(publicKey));
 
     // Rate limit check
     if (!ipAttempts[ip]) {
@@ -111,7 +107,6 @@ export async function POST(req: NextRequest) {
 
     if (fs.existsSync(filePath)) {
       const existingData = fs.readFileSync(filePath, "utf8");
-      console.log("🚀 ~ POST ~ existingData:", existingData);
       fileData = existingData ? JSON.parse(existingData) : [];
     }
 
@@ -139,6 +134,8 @@ export async function POST(req: NextRequest) {
     if (!isValid) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
+    ipEntry.last_attempt = Date.now();
+    ipEntry.address = address;
     // Write updated data back to the file
     fs.writeFileSync(filePath, JSON.stringify(fileData, null, 2));
     return NextResponse.json({ success: true });

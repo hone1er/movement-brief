@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Turnstile from "react-turnstile";
 import { EVMComponent } from "./evm/EVMComponent";
 import MovementComponent from "./MovementComponent";
@@ -22,7 +22,7 @@ const ProtectedConnectButtons = () => {
   const verifyTokenOnServer = async () => {
     // Optional: Verify the token on your backend
     try {
-      const response = await fetch("/api/verify-captcha", {
+      const response = await fetch("/api/authentication/cloudflare/captcha", {
         method: "POST",
         body: JSON.stringify({ token: captchaToken }),
         headers: { "Content-Type": "application/json" },
@@ -33,6 +33,20 @@ const ProtectedConnectButtons = () => {
       return false;
     }
   };
+
+  useEffect(() => {
+    const verifyToken = async () => {
+      if (captchaToken) {
+        const isVerified = await verifyTokenOnServer();
+        if (!isVerified) {
+          //   setIsCaptchaVerified(false);
+        }
+      }
+    };
+    verifyToken()
+      .then((val) => console.log(val))
+      .catch((err) => console.error(err));
+  }, [captchaToken]);
 
   return (
     <div className="flex min-h-96 min-w-full items-center justify-between bg-gray-100 px-8 text-black">

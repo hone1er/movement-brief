@@ -19,7 +19,7 @@ const EVMComponent = ({
   const { address } = useAccount();
 
   useEffect(() => {
-    if (address && !isConnected) {
+    if (address) {
       onConnect();
       setIsConnected(true);
     }

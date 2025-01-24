@@ -21,7 +21,6 @@ const MovementRegistration = () => {
     }
 
     const isRegistered = await checkIfAddressExists(address, "movement");
-    console.log("🚀 ~ handleRegistration ~ isRegistered:", isRegistered);
     if (isRegistered) {
       setRegistrationError("Address is already registered");
       return;
@@ -95,11 +94,13 @@ const MovementRegistration = () => {
 
   return (
     <div className="mt-6">
-      <p className="text-sm text-gray-600">
-        <span className="font-medium text-gray-800">Connected with:</span>{" "}
-        {address}
-      </p>
-      <p className="mt-4 text-sm text-gray-500">
+      {address && (
+        <p className="text-sm text-gray-600">
+          <span className="font-medium text-gray-800">Connected with:</span>{" "}
+          {address.slice(0, 6)}...{address.slice(-5)}
+        </p>
+      )}
+      <p className="mt-4 flex-wrap text-left text-sm text-gray-500">
         Please sign to prove ownership of the address and register your account.
       </p>
       <div className="my-4">
