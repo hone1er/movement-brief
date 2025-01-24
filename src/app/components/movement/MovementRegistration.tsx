@@ -2,7 +2,7 @@
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import React, { useState } from "react";
 import { encode as encodeBase64 } from "base64-arraybuffer";
-import { checkIfAddressExists } from "../lib/utils/checkIfAddressExist";
+import { checkIfAddressExists } from "../../lib/utils/checkIfAddressExist";
 
 const MovementRegistration = () => {
   const { account, signMessage } = useWallet();

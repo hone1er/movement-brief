@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Turnstile from "react-turnstile";
 import { EVMComponent } from "./evm/EVMComponent";
-import MovementComponent from "./MovementComponent";
+import MovementComponent from "./movement/MovementComponent";
 
 type Networks = "EVM" | "Aptos/Movement";
 
